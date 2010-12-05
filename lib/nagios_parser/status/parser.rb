@@ -12,7 +12,7 @@ module NagiosParser
   module Status
     class Parser < Racc::Parser
 
-module_eval(<<'...end parser.y/module_eval...', 'parser.y', 41)
+module_eval(<<'...end parser.y/module_eval...', 'parser.y', 39)
 
 def create_token(string)
   result = []
@@ -181,7 +181,7 @@ Racc_debug_parser = false
 
 # reduce 2 omitted
 
-module_eval(<<'.,.,', 'parser.y', 13)
+module_eval(<<'.,.,', 'parser.y', 11)
   def _reduce_3(val, _values, result)
             @result[val[0]] ||= []
 	@result[val[0]] << val[2]
@@ -206,7 +206,7 @@ module_eval(<<'.,.,', 'parser.y', 13)
 
 # reduce 11 omitted
 
-module_eval(<<'.,.,', 'parser.y', 24)
+module_eval(<<'.,.,', 'parser.y', 22)
   def _reduce_12(val, _values, result)
             val[1].each do |key, value|
           val[0][key] = value
@@ -217,14 +217,14 @@ module_eval(<<'.,.,', 'parser.y', 24)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 31)
+module_eval(<<'.,.,', 'parser.y', 29)
   def _reduce_13(val, _values, result)
      result = {val[0] => nil}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 32)
+module_eval(<<'.,.,', 'parser.y', 30)
   def _reduce_14(val, _values, result)
      result = {val[0] => val[1]} 
     result

@@ -1,8 +1,6 @@
 class NagiosParser::Status::Parser
   token
     OPEN CLOSE KEY VALUE
-    'hostcomment' 'servicestatus' 'info' 'programstatus'
-    'hoststatus' 'contactstatus' 'servicecomment'
 
   rule
     types
