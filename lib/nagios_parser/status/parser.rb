@@ -49,6 +49,10 @@ end
 
 attr_accessor :token
 
+def self.parse(string)
+  new.parse(string)
+end
+
 def parse(string)
   @result = {}
   @token = create_token(string)

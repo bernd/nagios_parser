@@ -4,6 +4,13 @@ require 'nagios_parser/status/parser'
 describe NagiosParser::Status::Parser do
   let(:parser) { NagiosParser::Status::Parser.new }
 
+  describe ".parse" do
+    it "returns a hash of status types" do
+      data = NagiosParser::Status::Parser.parse('info { version=3.2.0 }')
+      data['info'].first['version'].should == '3.2.0'
+    end
+  end
+
   describe "#create_token" do
     context "given a valid string" do
       it "creates a valid token list" do
