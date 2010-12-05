@@ -62,6 +62,7 @@ describe NagiosParser::Status::Parser do
           hoststatus {
             bar=baz
             hello = world
+            version = 1
           }
           info { version=3.2.0 }
         RUBY
@@ -69,6 +70,7 @@ describe NagiosParser::Status::Parser do
         data = parser.parse(string)
         data['info'].first['version'].should == '3.2.0'
         data['hoststatus'].first['bar'].should == 'baz'
+        data['hoststatus'].first['version'].should == 1
       end
     end
 
