@@ -7,9 +7,14 @@ RSpec::Core::RakeTask.new do |t|
   t.rcov = false
 end
 
-desc 'Generate the parser with racc'
-task :parser => ['lib/nagios_parser/status/parser.rb']
+namespace :parser do
+  desc 'Generate the status parser with racc'
+  task :status => [ 'lib/nagios_parser/status/parser.rb' ]
 
-rule '.rb' => '.y' do |target|
-  sh "racc -o #{target.name} #{target.source}"
+  desc 'Generate the config parser with racc'
+  task :config => [ 'lib/nagios_parser/config/parser.rb' ]
+
+  rule '.rb' => '.y' do |target|
+    sh "racc -o #{target.name} #{target.source}"
+  end
 end
