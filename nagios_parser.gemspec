@@ -9,8 +9,11 @@ Gem::Specification.new do |s|
   s.authors     = ["Bernd Ahlers"]
   s.email       = ["bernd@tuneafish.de"]
   s.homepage    = "http://rubygems.org/gems/nagios_parser"
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{parser lib for parsing Nagios status and config files}
+  s.description = %q{
+    The nagios_parser gem provides parsers for Nagios config
+    and status files.
+  }
 
   #s.rubyforge_project = "nagios_parser"
 
