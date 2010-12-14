@@ -1,4 +1,4 @@
-class NagiosParser::Config::Parser
+class NagiosParser::Object::Parser
   token
     DEFINE TYPE OPEN CLOSE KEY VALUE
 

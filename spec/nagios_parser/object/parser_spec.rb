@@ -1,12 +1,12 @@
 require 'spec_helper'
 require 'nagios_parser/config/parser'
 
-describe NagiosParser::Config::Parser do
-  let(:parser) { NagiosParser::Config::Parser.new }
+describe NagiosParser::Object::Parser do
+  let(:parser) { NagiosParser::Object::Parser.new }
 
   describe ".parse" do
     it "returns a hash of status types" do
-      data = NagiosParser::Config::Parser.parse('define host { host_name foo }')
+      data = NagiosParser::Object::Parser.parse('define host { host_name foo }')
       data['host'].first['host_name'].should == 'foo'
     end
   end
