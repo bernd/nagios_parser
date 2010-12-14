@@ -112,6 +112,9 @@ the Ruby files afterwards. There are two rake tasks to help with that.
 * `rake parser::status`
 * `rake parser::object`
 
+The bundler gem is used to handle the development dependencies.
+Run `bundle install` to install them.
+
 Please let me know if you have any questions or if you run into any
 problems.
 
