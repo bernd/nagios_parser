@@ -6,7 +6,7 @@ describe NagiosParser::Status::Parser do
 
   describe ".parse" do
     it "returns a hash of status types" do
-      data = NagiosParser::Status::Parser.parse('info { version=3.2.0 }')
+      data = parser.parse('info { version=3.2.0 }')
       data['info'].first['version'].should == '3.2.0'
     end
   end

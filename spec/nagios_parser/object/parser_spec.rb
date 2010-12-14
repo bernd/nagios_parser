@@ -6,7 +6,7 @@ describe NagiosParser::Object::Parser do
 
   describe ".parse" do
     it "returns a hash of status types" do
-      data = NagiosParser::Object::Parser.parse('define host { host_name foo }')
+      data = parser.parse('define host { host_name foo }')
       data['host'].first['host_name'].should == 'foo'
     end
   end
