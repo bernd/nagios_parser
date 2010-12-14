@@ -1,3 +1,2 @@
-module NagiosParser
-  # Your code goes here...
-end
+require 'nagios_parser/object/parser'
+require 'nagios_parser/status/parser'
