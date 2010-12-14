@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'nagios_parser/config/parser'
+require 'nagios_parser/object/parser'
 
 describe NagiosParser::Object::Parser do
   let(:parser) { NagiosParser::Object::Parser.new }
