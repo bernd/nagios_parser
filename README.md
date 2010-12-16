@@ -22,33 +22,33 @@ directly.
 
 ## Status Parser
 
-  require 'nagios_parser/status/parser'
-  require 'pp'
+    require 'nagios_parser/status/parser'
+    require 'pp'
 
-  status = <<-STATUS
-    info {
-            created=1291408262
-            version=3.2.0
-            last_update_check=1291201457
-            update_available=1
-            last_version=3.2.0
-            new_version=3.2.3
-            }
-    hoststatus {
-            host_name=server1
-            modified_attributes=0
-            check_command=check-ping
-            check_period=24x7
-            notification_period=24x7
-            check_interval=5.000000
-            retry_interval=1.000000
-            event_handler=
-            has_been_checked=1
-            }
-  STATUS
+    status = <<-STATUS
+      info {
+              created=1291408262
+              version=3.2.0
+              last_update_check=1291201457
+              update_available=1
+              last_version=3.2.0
+              new_version=3.2.3
+              }
+      hoststatus {
+              host_name=server1
+              modified_attributes=0
+              check_command=check-ping
+              check_period=24x7
+              notification_period=24x7
+              check_interval=5.000000
+              retry_interval=1.000000
+              event_handler=
+              has_been_checked=1
+              }
+    STATUS
 
-  data = NagiosParser::Status::Parser.parse(status)
-  pp data
+    data = NagiosParser::Status::Parser.parse(status)
+    pp data
 
 This will print a data structure that looks like this.
 
