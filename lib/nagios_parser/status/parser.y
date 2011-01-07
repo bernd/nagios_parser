@@ -14,8 +14,11 @@ class NagiosParser::Status::Parser
       }
       ;
     type_names
-      : 'hostcomment' | 'servicestatus' | 'info' | 'programstatus'
-      | 'hoststatus' | 'contactstatus' | 'servicecomment'
+      : 'contactstatus' |'hostcomment' | 'hostdowntime' | 'hoststatus'
+      | 'info' | 'servicecomment' | 'servicedowntime' | 'servicestatus' 
+      | 'programstatus'
+      # Nagois 2.x.x
+      | 'host' | 'service' | 'program'
       ;
     assignments
       : assignment
