@@ -1,6 +1,6 @@
 class NagiosParser::Status::Parser
   token
-    OPEN CLOSE KEY VALUE
+    TYPE OPEN CLOSE KEY VALUE
 
   rule
     types
@@ -8,17 +8,10 @@ class NagiosParser::Status::Parser
       | types type
       ;
     type
-      : type_names OPEN assignments CLOSE {
+      : TYPE OPEN assignments CLOSE {
         @result[val[0]] ||= []
 	@result[val[0]] << val[2]
       }
-      ;
-    type_names
-      : 'contactstatus' |'hostcomment' | 'hostdowntime' | 'hoststatus'
-      | 'info' | 'servicecomment' | 'servicedowntime' | 'servicestatus' 
-      | 'programstatus'
-      # Nagois 2.x.x
-      | 'host' | 'service' | 'program'
       ;
     assignments
       : assignment
@@ -52,7 +45,7 @@ def create_token(string)
     when scanner.scan(/#[^\n]*/)
       # ignore comments
     when (!inside and match = scanner.scan(/\w+/))
-      result << [match, match]
+      result << [:TYPE, match]
     when match = scanner.scan(/\{/)
       inside = true
       result << [:OPEN, nil]

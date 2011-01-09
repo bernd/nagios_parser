@@ -31,7 +31,7 @@ describe NagiosParser::Status::Parser do
         RUBY
 
         parser.create_token(string).should == [
-          ['hoststatus', 'hoststatus'],
+          [:TYPE, 'hoststatus'],
           [:OPEN, nil],
           [:KEY, 'bar'], [:VALUE, 'baz'],
           [:KEY, 'hello'], [:VALUE, 'world'],
@@ -39,11 +39,11 @@ describe NagiosParser::Status::Parser do
           [:KEY, 'foo'], [:VALUE, 'bar baz hello world'],
           [:KEY, 'eek'], [:VALUE, 1],
           [:CLOSE, nil],
-          ['info', 'info'],
+          [:TYPE, 'info'],
           [:OPEN, nil],
           [:KEY, 'version'], [:VALUE, '3.2.0'],
           [:CLOSE, nil],
-          ['programstatus', 'programstatus'],
+          [:TYPE, 'programstatus'],
           [:OPEN, nil],
           [:KEY, 'last_command_check'], [:VALUE, 1291408262],
           [:KEY, 'global_service_event_handler'],
@@ -72,20 +72,17 @@ describe NagiosParser::Status::Parser do
             version = 1
           }
           info { version=3.2.0 }
+
+          program {
+              version=2.x.x
+                                   }
         RUBY
 
         data = parser.parse(string)
         data['info'].first['version'].should == '3.2.0'
         data['hoststatus'].first['bar'].should == 'baz'
         data['hoststatus'].first['version'].should == 1
-      end
-    end
-
-    context "with an invalid status type" do
-      it "will raise an exception" do
-        expect {
-          parser.parse('FooBar { info=test }')
-        }.to raise_error
+        data['program'].first['version'].should == '2.x.x'
       end
     end
 
