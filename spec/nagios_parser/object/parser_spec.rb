@@ -5,7 +5,7 @@ describe NagiosParser::Object::Parser do
   let(:parser) { NagiosParser::Object::Parser.new }
 
   describe ".parse" do
-    it "returns a hash of status types" do
+    it "returns a hash of object definitions" do
       data = parser.parse('define host { host_name foo }')
       data['host'].first['host_name'].should == 'foo'
     end
@@ -58,7 +58,7 @@ describe NagiosParser::Object::Parser do
 
   describe "#parse" do
     context "with a valid string" do
-      it "returns a hash of status types" do
+      it "returns a hash of object definitions" do
         string = <<-RUBY
           define host {
             host_name foo.example.com
@@ -72,19 +72,21 @@ describe NagiosParser::Object::Parser do
       end
     end
 
-    context "with an invalid status type" do
-      it "will raise an exception" do
-        expect {
-          parser.parse('FooBar { info test }')
-        }.to raise_error
+    context "with an invalid object definition" do
+      describe "example: FooBar { info test }" do
+        it "will raise an exception" do
+          expect {
+            parser.parse('FooBar { info test }')
+          }.to raise_error
+        end
       end
-    end
 
-    context "with invalid status data" do
-      it "will raise an exception" do
-        expect {
-          parser.parse('define host { =test }')
-        }.to raise_error
+      describe "example: define host { =test }" do
+        it "will raise an exception" do
+          expect {
+            parser.parse('define host { =test }')
+          }.to raise_error
+        end
       end
     end
   end
