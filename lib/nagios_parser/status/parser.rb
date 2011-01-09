@@ -12,7 +12,7 @@ module NagiosParser
   module Status
     class Parser < Racc::Parser
 
-module_eval(<<'...end parser.y/module_eval...', 'parser.y', 42)
+module_eval(<<'...end parser.y/module_eval...', 'parser.y', 35)
 
 def create_token(string)
   result = []
@@ -26,7 +26,7 @@ def create_token(string)
     when scanner.scan(/#[^\n]*/)
       # ignore comments
     when (!inside and match = scanner.scan(/\w+/))
-      result << [match, match]
+      result << [:TYPE, match]
     when match = scanner.scan(/\{/)
       inside = true
       result << [:OPEN, nil]
@@ -67,86 +67,55 @@ end
 ##### State transition tables begin ###
 
 racc_action_table = [
-    16,    23,    22,    19,    22,    18,     4,     5,     6,     7,
-     8,     9,    10,    11,    12,    13,    14,    15,     4,     5,
-     6,     7,     8,     9,    10,    11,    12,    13,    14,    15,
-    25 ]
+     5,     8,     1,    13,     8,     4,    10,    11,     1 ]
 
 racc_action_check = [
-     1,    20,    20,    16,    18,     3,     1,     1,     1,     1,
-     1,     1,     1,     1,     1,     1,     1,     1,     0,     0,
-     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-    22 ]
+     2,     4,     2,     9,     9,     1,     5,     8,     0 ]
 
 racc_action_pointer = [
-    12,     0,   nil,     3,   nil,   nil,   nil,   nil,   nil,   nil,
-   nil,   nil,   nil,   nil,   nil,   nil,     3,   nil,     0,   nil,
-    -2,   nil,    25,   nil,   nil,   nil ]
+     6,     2,     0,   nil,    -4,     6,   nil,   nil,     1,    -1,
+   nil,   nil,   nil,   nil ]
 
 racc_action_default = [
-   -20,   -20,    -1,   -20,    -4,    -5,    -6,    -7,    -8,    -9,
-   -10,   -11,   -12,   -13,   -14,   -15,   -20,    -2,   -20,    26,
-   -20,   -16,   -18,    -3,   -17,   -19 ]
+    -8,    -8,    -8,    -1,    -8,    -8,    -2,    -4,    -6,    -8,
+    14,    -7,    -5,    -3 ]
 
 racc_goto_table = [
-    21,    20,    24,     2,    17,     1 ]
+     7,     3,     9,     6,     2,    12 ]
 
 racc_goto_check = [
-     5,     4,     5,     2,     2,     1 ]
+     4,     2,     3,     2,     1,     4 ]
 
 racc_goto_pointer = [
-   nil,     5,     3,   nil,   -17,   -18 ]
+   nil,     4,     1,    -2,    -4 ]
 
 racc_goto_default = [
-   nil,   nil,   nil,     3,   nil,   nil ]
+   nil,   nil,   nil,   nil,   nil ]
 
 racc_reduce_table = [
   0, 0, :racc_error,
-  1, 19, :_reduce_none,
-  2, 19, :_reduce_none,
-  4, 20, :_reduce_3,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 21, :_reduce_none,
-  1, 22, :_reduce_none,
-  2, 22, :_reduce_17,
-  1, 23, :_reduce_18,
-  2, 23, :_reduce_19 ]
+  1, 8, :_reduce_none,
+  2, 8, :_reduce_none,
+  4, 9, :_reduce_3,
+  1, 10, :_reduce_none,
+  2, 10, :_reduce_5,
+  1, 11, :_reduce_6,
+  2, 11, :_reduce_7 ]
 
-racc_reduce_n = 20
+racc_reduce_n = 8
 
-racc_shift_n = 26
+racc_shift_n = 14
 
 racc_token_table = {
   false => 0,
   :error => 1,
-  :OPEN => 2,
-  :CLOSE => 3,
-  :KEY => 4,
-  :VALUE => 5,
-  "contactstatus" => 6,
-  "hostcomment" => 7,
-  "hostdowntime" => 8,
-  "hoststatus" => 9,
-  "info" => 10,
-  "servicecomment" => 11,
-  "servicedowntime" => 12,
-  "servicestatus" => 13,
-  "programstatus" => 14,
-  "host" => 15,
-  "service" => 16,
-  "program" => 17 }
+  :TYPE => 2,
+  :OPEN => 3,
+  :CLOSE => 4,
+  :KEY => 5,
+  :VALUE => 6 }
 
-racc_nt_base = 18
+racc_nt_base = 7
 
 racc_use_result_var = true
 
@@ -169,26 +138,14 @@ Racc_arg = [
 Racc_token_to_s_table = [
   "$end",
   "error",
+  "TYPE",
   "OPEN",
   "CLOSE",
   "KEY",
   "VALUE",
-  "\"contactstatus\"",
-  "\"hostcomment\"",
-  "\"hostdowntime\"",
-  "\"hoststatus\"",
-  "\"info\"",
-  "\"servicecomment\"",
-  "\"servicedowntime\"",
-  "\"servicestatus\"",
-  "\"programstatus\"",
-  "\"host\"",
-  "\"service\"",
-  "\"program\"",
   "$start",
   "types",
   "type",
-  "type_names",
   "assignments",
   "assignment" ]
 
@@ -213,32 +170,8 @@ module_eval(<<'.,.,', 'parser.y', 11)
 
 # reduce 4 omitted
 
-# reduce 5 omitted
-
-# reduce 6 omitted
-
-# reduce 7 omitted
-
-# reduce 8 omitted
-
-# reduce 9 omitted
-
-# reduce 10 omitted
-
-# reduce 11 omitted
-
-# reduce 12 omitted
-
-# reduce 13 omitted
-
-# reduce 14 omitted
-
-# reduce 15 omitted
-
-# reduce 16 omitted
-
-module_eval(<<'.,.,', 'parser.y', 25)
-  def _reduce_17(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 18)
+  def _reduce_5(val, _values, result)
             val[1].each do |key, value|
           val[0][key] = value
         end
@@ -248,15 +181,15 @@ module_eval(<<'.,.,', 'parser.y', 25)
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 32)
-  def _reduce_18(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 25)
+  def _reduce_6(val, _values, result)
      result = {val[0] => nil}
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'parser.y', 33)
-  def _reduce_19(val, _values, result)
+module_eval(<<'.,.,', 'parser.y', 26)
+  def _reduce_7(val, _values, result)
      result = {val[0] => val[1]} 
     result
   end
