@@ -17,6 +17,9 @@ namespace :parser do
   desc 'Generate the resource parser with racc'
   task :resource => [ 'lib/nagios_parser/resource/parser.rb' ]
 
+  desc 'Generate the main config parser with racc'
+  task :config => [ 'lib/nagios_parser/config/parser.rb' ]
+
   rule '.rb' => '.y' do |target|
     sh "racc -o #{target.name} #{target.source}"
   end
