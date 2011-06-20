@@ -64,7 +64,8 @@ def create_token(string)
     when (inside and match = scanner.scan(/\d+$/))
       result << [:VALUE, match.to_i]
     when (inside and match = scanner.scan(/[^\n\}]+/))
-      result << [:VALUE, match.gsub(/\s+$/, '')]
+      # Make sure to ignore inline comments starting with ';'.
+      result << [:VALUE, match.split(';').first.gsub(/\s+$/, '')]
     else
       raise "Can't tokenize <#{scanner.peek(10)}>"
     end

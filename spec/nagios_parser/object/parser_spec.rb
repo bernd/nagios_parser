@@ -21,7 +21,7 @@ describe NagiosParser::Object::Parser do
           }
           define service {
             host_name   foo.example.com
-            service_description SUPERD
+            service_description SUPERD ; I like that!
             }
         RUBY
 
