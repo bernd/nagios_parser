@@ -8,6 +8,8 @@ files and a parser for the Nagios object definition files.
 
 * NagiosParser::Status::Parser
 * NagiosParser::Object::Parser
+* NagiosParser::Config::Parser
+* NagiosParser::Resource::Parser
 
 Both parsers return plain hashes and arrays. There are no special
 Nagios objects or something like that. That means you can create
@@ -100,6 +102,42 @@ This will print a data structure that looks like this.
         "host_name"=>"server1",
         "alias"=>"server1.example.com"}]}
 
+## Config Parser
+
+    require 'nagios_parser/config/parser'
+    require 'pp'
+
+    config = <<-CONFIG
+      log_file=/var/log/nagios3/nagios.log
+      status_update_interval=10
+    CONFIG
+
+    data = NagiosParser::Config::Parser.parse(config)
+    pp data
+
+This will print a data structure that looks like this.
+
+    {"log_file"=>"/var/log/nagios3/nagios.log",
+     "status_update_interval"=>10}
+
+## Resource macro parser
+
+    require 'nagios_parser/resource/parser'
+    require 'pp'
+
+    resource = <<-RESOURCE
+      $USER1$=/usr/lib/nagios/plugins
+      $USER10$=mysqluser
+    RESOURCE
+
+    data = NagiosParser::Resource::Parser.parse(resource)
+    pp data
+
+This will print a data structure that looks like this.
+
+    {"$USER10$"=>"mysqluser",
+     "$USER1$"=>"/usr/lib/nagios/plugins"}
+
 # Development
 
 The parsers are based on the racc parser generator. racc is needed
@@ -111,6 +149,8 @@ the Ruby files afterwards. There are two rake tasks to help with that.
 
 * `rake parser::status`
 * `rake parser::object`
+* `rake parser::config`
+* `rake parser::resource`
 
 The bundler gem is used to handle the development dependencies.
 Run `bundle install` to install them.
