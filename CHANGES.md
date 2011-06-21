@@ -1,6 +1,10 @@
 nagios_parser - ChangeLog
 =========================
 
+# 1.2.1
+* Apply original diff from Mitsuru to strip comments.
+  This catches more inline comments.
+
 # 1.2.0
 * Add NagiosParser::Resource parser to parse Nagios resource
   macro files.
