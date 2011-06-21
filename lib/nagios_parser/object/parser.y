@@ -50,6 +50,7 @@ def create_token(string)
     when scanner.scan(/#[^\n]*/)
       # ignore comments
     when scanner.scan(/.*;[^\n]*/)
+      # ignore inline comments
       r = scanner.matched.sub(/(.*);[^\n]*/, '\1')
       scanner.string = r + scanner.rest
       scanner.reset
