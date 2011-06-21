@@ -49,6 +49,10 @@ def create_token(string)
       # ignore whitespace
     when scanner.scan(/#[^\n]*/)
       # ignore comments
+    when scanner.scan(/.*;[^\n]*/)
+      r = scanner.matched.sub(/(.*);[^\n]*/, '\1')
+      scanner.string = r + scanner.rest
+      scanner.reset
     when scanner.scan(/define/)
       result << [:DEFINE, nil]
     when (!inside and match = scanner.scan(/\w+/))
@@ -65,7 +69,7 @@ def create_token(string)
       result << [:VALUE, match.to_i]
     when (inside and match = scanner.scan(/[^\n\}]+/))
       # Make sure to ignore inline comments starting with ';'.
-      result << [:VALUE, match.split(';').first.gsub(/\s+$/, '')]
+      result << [:VALUE, match.first.gsub(/\s+$/, '')]
     else
       raise "Can't tokenize <#{scanner.peek(10)}>"
     end

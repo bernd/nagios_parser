@@ -19,10 +19,11 @@ describe NagiosParser::Object::Parser do
             host_name foo.example.com
             _plugin_path  /usr/lib64/nagios/plugins
           }
+          ; comment
           define service {
             host_name   foo.example.com
             service_description SUPERD ; I like that!
-            }
+            } ; Another comment
         RUBY
 
         parser.create_token(string).should == [
