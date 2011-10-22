@@ -1,6 +1,8 @@
 Nagios Parser
 =============
 
+[![Build Status](https://secure.travis-ci.org/bernd/nagios_parser.png)](http://travis-ci.org/bernd/nagios\_parser])
+
 # Description
 
 The `nagios_parser` gem provides a parser for the Nagios `status.dat`
