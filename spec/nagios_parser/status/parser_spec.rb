@@ -24,6 +24,11 @@ describe NagiosParser::Status::Parser do
           }
           info { version=3.2.0 }
 
+          servicestatus {
+            service_description=POP3S
+            plugin_output=POP OK - 0.062 second response time on port 995 [+OK Dovecot ready. <123.456@example.com>]
+          }
+
           programstatus {
             last_command_check=1291408262
             global_service_event_handler=
@@ -42,6 +47,11 @@ describe NagiosParser::Status::Parser do
           [:TYPE, 'info'],
           [:OPEN, nil],
           [:KEY, 'version'], [:VALUE, '3.2.0'],
+          [:CLOSE, nil],
+          [:TYPE, 'servicestatus'],
+          [:OPEN, nil],
+          [:KEY, 'service_description'], [:VALUE, 'POP3S'],
+          [:KEY, 'plugin_output'], [:VALUE, 'POP OK - 0.062 second response time on port 995 [+OK Dovecot ready. <123.456@example.com>]'],
           [:CLOSE, nil],
           [:TYPE, 'programstatus'],
           [:OPEN, nil],
