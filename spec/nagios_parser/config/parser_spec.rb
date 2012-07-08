@@ -60,12 +60,28 @@ describe NagiosParser::Config::Parser do
 
           lock_file=/var/run/nagios3/nagios3.pid
           event_broker_options=-1
+
+          cfg_dir=/etc/nagios/config1
+          cfg_dir=/etc/nagios/config2
+          cfg_dir=/etc/nagios/config3
+
+          cfg_file=/etc/nagios/file1
+          cfg_file=/etc/nagios/file2
         RUBY
 
         data = parser.parse(string)
         data['external_command_buffer_slots'].should == 4096
         data['lock_file'].should == '/var/run/nagios3/nagios3.pid'
         data['event_broker_options'].should == -1
+        data['cfg_dir'].should == [
+          '/etc/nagios/config1',
+          '/etc/nagios/config2',
+          '/etc/nagios/config3'
+        ]
+        data['cfg_file'].should == [
+          '/etc/nagios/file1',
+          '/etc/nagios/file2'
+        ]
       end
     end
 

@@ -14,6 +14,7 @@ end
 
 ---- header
 require 'strscan'
+require 'nagios_parser/result'
 
 ---- inner
 
@@ -48,10 +49,10 @@ def self.parse(string)
 end
 
 def parse(string)
-  @result = {}
+  @result = NagiosParser::Result.new(:multi_value => %w{cfg_file cfg_dir})
   @token = create_token(string)
   do_parse
-  @result
+  @result.to_hash
 end
 
 def next_token
