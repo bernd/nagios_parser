@@ -4,3 +4,4 @@ pkg/*
 .bundle
 .rspec
 scripts
+.ruby-version
