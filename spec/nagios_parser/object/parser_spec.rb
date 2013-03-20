@@ -73,6 +73,19 @@ describe NagiosParser::Object::Parser do
       end
     end
 
+    context "with a valid string containing squiggly braces" do
+      it "returns a hash of object definitions" do
+        string = <<-RUBY
+          define command {
+            command_line   check_http -u /api -P '{"key":"value"}' -k "content-type: application/json"
+          }
+        RUBY
+
+        data = parser.parse(string)
+        data['command'].first['command_line'] == "check_http -u /api -P '{\"key\":\"value\"}' -k \"content-type: application/json\""
+      end
+    end
+
     context "with a valid service definition containing empty notes" do
       it "parses optional value" do
         string = <<-RUBY
