@@ -24,6 +24,7 @@ class NagiosParser::Object::Parser
       ;
     assignment
       : KEY VALUE { result = {val[0] => val[1]} }
+      | KEY { result = {val[0] => nil } }
       ;
 end
 

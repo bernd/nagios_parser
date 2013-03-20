@@ -73,6 +73,20 @@ describe NagiosParser::Object::Parser do
       end
     end
 
+    context "with a valid service definition containing empty notes" do
+      it "parses optional value" do
+        string = <<-RUBY
+          define service {
+            host_name   foo.example.com
+            notes
+          }
+        RUBY
+
+        data = parser.parse(string)
+        data['service'].first['notes'].should be_nil
+      end
+    end
+
     context "with an invalid object definition" do
       describe "example: FooBar { info test }" do
         it "will raise an exception" do
