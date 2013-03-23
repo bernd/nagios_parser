@@ -24,6 +24,7 @@ class NagiosParser::Object::Parser
       ;
     assignment
       : KEY VALUE { result = {val[0] => val[1]} }
+      | KEY { result = {val[0] => nil } }
       ;
 end
 
@@ -41,6 +42,7 @@ public
 def create_token(string)
   result = []
   inside = false
+  inside_squigglies = false
   scanner = StringScanner.new(string)
 
   until scanner.empty?
@@ -58,16 +60,18 @@ def create_token(string)
       result << [:DEFINE, nil]
     when (!inside and match = scanner.scan(/\w+/))
       result << [:TYPE, match]
-    when match = scanner.scan(/\{/)
+    when (!inside and match = scanner.scan(/\{/))
       inside = true
       result << [:OPEN, nil]
-    when match = scanner.scan(/\}/)
+    when (match = scanner.scan(/\}/))
       inside = false
       result << [:CLOSE, nil]
     when (!last_is_key?(result) and match = scanner.scan(/\w+/))
       result << [:KEY, match.chomp.gsub(/\s+$/, '')]
     when (inside and match = scanner.scan(/\d+$/))
       result << [:VALUE, match.to_i]
+    when (inside and match = scanner.scan(/.*\{.+\}.*/))
+      result << [:VALUE, match.gsub(/\s+$/, '')]
     when (inside and match = scanner.scan(/[^\n\}]+/))
       # Make sure to ignore inline comments starting with ';'.
       result << [:VALUE, match.gsub(/\s+$/, '')]
