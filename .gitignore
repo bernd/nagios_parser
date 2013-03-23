@@ -5,3 +5,4 @@ pkg/*
 .rspec
 scripts
 .ruby-version
+.rvmrc
