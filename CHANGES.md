@@ -1,6 +1,10 @@
 nagios\_parser - ChangeLog
 ==========================
 
+# 1.3.0 (2013-03-23)
+* Support multiple values for `cfg_file` and `cfg_dir` options.
+* Loose grammar to support more nagios configuration files. (alisonrosewarne)
+
 # 1.2.2 (2011-10-22)
 * Unbreak on Ruby 1.9.x.
 
